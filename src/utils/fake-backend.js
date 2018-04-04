@@ -1,38 +1,31 @@
-let users = JSON.parse(localStorage.getItem("user")) || [];
+const localUsers = JSON.parse(localStorage.getItem("user")) || [
+  {
+    username: "pepito",
+    password: "1234",
+    name: "Pepito Perez"
+  }
+];
 
-export function configureBackend() {
-  let realFetch = window.fetch;
-  window.fetch = (url, opts) => {
-    return new Promise((resolve, reject) => {
-      // Simulate the server API call
-      setTimeout(() => {
-        let params = opts.body;
+export function doLogin(username, password) {
+  return new Promise((resolve, reject) => {
+    // Simulate the server API call
+    setTimeout(() => {
+      // Authenticate
+      let users = localUsers.filter(user => {
+        return user.username === username && user.password === password;
+      });
 
-        // Authenticate
-        if (url.endsWith("/users/login") && opts.method === "POST") {
-          let user = users.filter(user => {
-            return (
-              user.username === params.username &&
-              user.password === params.password
-            );
-          });
+      if (users.length) {
+        let user = { ...users[0], token: "fake-token" };
+        resolve({ ok: true, json: user });
+      } else {
+        reject("Wrong username or password");
+      }
+      return;
+    }, 500);
+  });
+}
 
-          if (user.length) {
-            user = { ...user[0], token: "fake-token" };
-            resolve({ ok: true, json: () => user });
-          } else {
-            reject("Wrong username or password");
-          }
-          return;
-        }
-
-        // Register
-        if (url.endsWith("/users/register") && opts.method === "POST") {
-          return;
-        }
-
-        realFetch(url, opts).then(response => resolve(response));
-      }, 500);
-    });
-  };
+export function doRegister(userInfo) {
+  setTimeout(() => {}, 500);
 }

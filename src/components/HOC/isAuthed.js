@@ -15,7 +15,7 @@ export default RealComponent => {
 
     componentWillMount() {
       if (!this.props.user.isLogged) {
-        this.props.history.push("/login");
+        this.props.history.push("/users/login");
       }
     }
 
@@ -24,7 +24,7 @@ export default RealComponent => {
         return false;
       }
       if (!this.nextProps.user.isLogged) {
-        this.props.router.history.push("/login");
+        this.props.router.history.push("/users/login");
       }
     }
 

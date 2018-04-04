@@ -1,17 +1,17 @@
-import { IS_LOGGED } from "../constants";
+import { IS_LOGGED, PUT_USER } from "../constants";
 
 const initialState = {
   isLogged: false,
-  user: {
-    user: "pepito.perez",
-    name: "Pepito Perez"
-  }
+  user: {}
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case IS_LOGGED:
       return state.isLogged;
+
+    case PUT_USER:
+      return { user: { ...action.user }, isLogged: true };
 
     default:
       return state;
