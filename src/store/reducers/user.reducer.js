@@ -1,7 +1,11 @@
 import { IS_LOGGED } from "../constants";
 
 const initialState = {
-  isLogged: false
+  isLogged: false,
+  user: {
+    user: "pepito.perez",
+    name: "Pepito Perez"
+  }
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,7 +14,7 @@ const userReducer = (state = initialState, action) => {
       return state.isLogged;
 
     default:
-      return false;
+      return state;
   }
 };
 
