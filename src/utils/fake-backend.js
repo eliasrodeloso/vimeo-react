@@ -1,4 +1,6 @@
-const localUsers = JSON.parse(localStorage.getItem("user")) || [
+import uuid from "uuid/v4";
+
+const localUsers = JSON.parse(localStorage.getItem("users")) || [
   {
     username: "pepito",
     password: "1234",
@@ -27,5 +29,16 @@ export function doLogin(username, password) {
 }
 
 export function doRegister(userInfo) {
-  setTimeout(() => {}, 500);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        users = [...users, { ...userInfo, id: uuid() }];
+        localStorage.setItem("users", JSON.stringify(users));
+        resolve({ ok: true, json: { message: "Succesfully added" } });
+      } catch (error) {
+        reject(error);
+      }
+    }, 500);
+  });
 }

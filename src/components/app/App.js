@@ -12,10 +12,10 @@ class App extends Component {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/users/login">Login</Link>
           </li>
           <li>
-            <Link to="/register">Register</Link>
+            <Link to="/users/register">Register</Link>
           </li>
         </ul>
       </div>

@@ -133,7 +133,8 @@ class Login extends Component {
                       onClick={evt => this.submit(evt)}
                       variant="raised"
                       color="primary"
-                      size="large"
+                      size={"large"}
+                      fullWidth
                     >
                       SUBMIT
                     </Button>
