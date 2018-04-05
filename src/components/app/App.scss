@@ -1,14 +1,12 @@
+@import "../../style/_variables.scss";
+
 .App {
-  ul {
-    list-style: none;
-    margin: 0;
+  width: 100%;
+  position: relative;
+  display: flex;
+  overflow: hidden;
 
-    li {
-      display: inline-block;
-
-      &:not(:last-of-type) {
-        padding-right: 1rem;
-      }
-    }
+  &__title {
+    flex: 1;
   }
 }
