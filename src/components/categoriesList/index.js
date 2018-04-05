@@ -18,7 +18,9 @@ class CategoriesList extends React.Component {
     axios.get("/categories").then(response => {
       if (response.status === 200) {
         response.data.data.forEach((category, index) => {
-          this.Categories.push(<Category key={index} category={category} />);
+          this.Categories.push(
+            <Category key={index} index={index} category={category} />
+          );
         });
         this.setState({ loading: false });
       }
