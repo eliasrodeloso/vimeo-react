@@ -41,10 +41,7 @@ class Category extends React.Component {
   componentWillMount() {
     if (this.props.index === 0) {
       this.setState({ selected: true });
-      this.props.setActiveCategory({
-        uri: this.props.category.uri,
-        name: this.props.category.name
-      });
+      this.props.setActiveCategory(this.props.category);
     }
   }
 

@@ -1,14 +1,11 @@
 import { SET_ACTIVE_CATEGORY } from "../constants";
 
-const initialState = {
-  uri: "",
-  name: ""
-};
+const initialState = {};
 
 const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ACTIVE_CATEGORY:
-      return { ...state, uri: action.category.uri, name: action.category.name };
+      return { ...state, ...action.category };
 
     default:
       return state;

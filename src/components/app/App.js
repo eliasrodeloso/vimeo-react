@@ -12,6 +12,7 @@ import { withStyles } from "material-ui/styles";
 import axios from "axios";
 
 import CategoriesList from "../categoriesList";
+import VideoList from "../videoList";
 import "./App.scss";
 
 const drawerWidth = 280;
@@ -32,6 +33,9 @@ const styles = theme => {
     Toolbar: theme.mixins.toolbar,
     menu__icon: {
       marginRight: theme.spacing.unit * 2
+    },
+    content: {
+      padding: theme.spacing.unit * 3
     }
   };
 };
@@ -70,7 +74,15 @@ class App extends Component {
           <Divider />
           <CategoriesList axios={this.axios} />
         </Drawer>
-        <main className={classes.App__main}>asdasdxasd</main>
+        <main className={classes.App__main}>
+          <div className={classes.Toolbar} />
+          <div className={classes.content}>
+            <VideoList
+              category={{ uri: "/categories/animation", name: "Animation" }}
+              axios={this.axios}
+            />
+          </div>
+        </main>
       </div>
     );
   }
