@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { Link } from "react-router-dom";
 import Typography from "material-ui/Typography";
 import AppBar from "material-ui/AppBar";
 import Toolbar from "material-ui/Toolbar";
@@ -10,11 +9,10 @@ import Drawer from "material-ui/Drawer";
 import Divider from "material-ui/Divider";
 import { withStyles } from "material-ui/styles";
 import axios from "axios";
-import NestedRoutes from "../../route/nested";
-
-import CategoriesList from "../categoriesList";
 
 import "./App.scss";
+import NestedRoutes from "../../route/nested";
+import CategoriesList from "../sideMenu";
 
 const drawerWidth = 280;
 
