@@ -26,6 +26,7 @@ export default RealComponent => {
       // if (!this.nextProps.user.isLogged) {
       //   this.props.router.history.push("/users/login");
       // }
+      return true;
     }
 
     render() {

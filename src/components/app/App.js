@@ -10,15 +10,15 @@ import Drawer from "material-ui/Drawer";
 import Divider from "material-ui/Divider";
 import { withStyles } from "material-ui/styles";
 import axios from "axios";
+import NestedRoutes from "../../route/nested";
 
 import CategoriesList from "../categoriesList";
-import VideoList from "../videoList";
+
 import "./App.scss";
 
 const drawerWidth = 280;
 
 const styles = theme => {
-  console.log(theme);
   return {
     App__bar: {
       zIndex: theme.zIndex.drawer + 1
@@ -78,7 +78,7 @@ class App extends Component {
         <main className={classes.App__main}>
           <div className={classes.Toolbar} />
           <div className={classes.content}>
-            <VideoList axios={this.axios} />
+            <NestedRoutes axios={this.axios} />
           </div>
         </main>
       </div>

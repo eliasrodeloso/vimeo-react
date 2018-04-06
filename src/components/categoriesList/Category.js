@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { ListItem, ListItemText } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import { withStyles } from "material-ui/styles";
+import { withRouter } from "react-router-dom";
 
 import { setActiveCategory } from "../../store/actions/category.actions";
 
@@ -48,13 +49,14 @@ class Category extends React.Component {
   render() {
     const { category, classes } = this.props;
     return (
-      <ListItem button>
+      <ListItem
+        button
+        onClick={evt => this.props.history.push(`${category.uri}`)}
+      >
         <Avatar
           className={classes.Avatar}
           alt={category.name}
-          classes={{
-            img: classes.Avatar__img
-          }}
+          classes={{ img: classes.Avatar__img }}
           src={category.icon.sizes[0].link}
         />
         <ListItemText
@@ -74,5 +76,5 @@ Category.propTypes = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(Category)
+  withRouter(withStyles(styles)(Category))
 );

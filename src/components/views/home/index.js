@@ -5,7 +5,7 @@ import Typography from "material-ui/Typography";
 import { CircularProgress } from "material-ui/Progress";
 
 import "./index.scss";
-import VideoListPage from "./VideoListPage";
+import VideoListPage from "../../commons/videoPage";
 
 const mapStateToProps = state => {
   return {
@@ -13,7 +13,7 @@ const mapStateToProps = state => {
   };
 };
 
-class VideoList extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,6 @@ class VideoList extends React.Component {
       axios.get(`${activeCategory.uri}/videos`).then(response => {
         if (response.status === 200) {
           this.videos = response.data;
-          console.log(this.videos);
           this.setState({ loaded: true });
         }
       });
@@ -54,8 +53,8 @@ class VideoList extends React.Component {
   }
 }
 
-VideoList.propTypes = {
+Home.propTypes = {
   axios: PropTypes.func
 };
 
-export default connect(mapStateToProps, null)(VideoList);
+export default connect(mapStateToProps, null)(Home);
