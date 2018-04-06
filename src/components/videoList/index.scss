@@ -2,4 +2,14 @@
   &__title {
     border-bottom: 1px solid #afafaf;
   }
+
+  &__wrapper {
+    text-align: left;
+  }
+}
+
+.Tile {
+  &--margin {
+    margin: 8px !important;
+  }
 }

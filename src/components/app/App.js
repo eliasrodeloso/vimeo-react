@@ -35,6 +35,7 @@ const styles = theme => {
       marginRight: theme.spacing.unit * 2
     },
     content: {
+      textAlign: "center",
       padding: theme.spacing.unit * 3
     }
   };
@@ -77,10 +78,7 @@ class App extends Component {
         <main className={classes.App__main}>
           <div className={classes.Toolbar} />
           <div className={classes.content}>
-            <VideoList
-              category={{ uri: "/categories/animation", name: "Animation" }}
-              axios={this.axios}
-            />
+            <VideoList axios={this.axios} />
           </div>
         </main>
       </div>
