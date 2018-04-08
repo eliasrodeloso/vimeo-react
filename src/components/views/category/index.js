@@ -8,13 +8,17 @@ import Pagination from "react-js-pagination";
 
 import "./index.scss";
 import { setActiveCategory } from "../../../store/actions/category.actions";
-import VideoListPage from "../../commons/videoPage";
+import VideoListPage from "./VideoListPage";
 
 const mapDispatchToProps = dispatch => {
   return {
     setActiveCategory: category => dispatch(setActiveCategory(category))
   };
 };
+
+const mapStateToProps = state => ({
+  activeCategory: state.category
+});
 
 class CategoryView extends React.Component {
   constructor(props) {
@@ -25,8 +29,7 @@ class CategoryView extends React.Component {
     };
     this.loadVideos = this.loadVideos.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
-    this.categoryInfo = {};
-    this.category = {};
+    this.categoryVideos = [];
   }
 
   loadVideos(uri, page = 1) {
@@ -36,7 +39,7 @@ class CategoryView extends React.Component {
       .then(response => {
         console.log(response);
         if (response.status === 200) {
-          this.categoryInfo = response.data;
+          this.categoryVideos = response.data;
           this.setState({ loaded: true });
         }
       })
@@ -46,77 +49,52 @@ class CategoryView extends React.Component {
   }
 
   handlePageChange(nextPage) {
-    if (nextPage !== this.categoryInfo.page) {
+    if (nextPage !== this.categoryVideos.page) {
       this.setState({ loaded: false });
       this.setState({ nextPage });
     }
   }
 
-  // called when is accesed trough URL directly
-  componentWillMount() {
-    let category = {
-      uri: this.props.match.url,
-      name:
-        this.props.match.params.id.charAt(0).toUpperCase() +
-        this.props.match.params.id.slice(1)
-    };
-    this.props.setActiveCategory(category);
-    this.category = category;
-  }
-
-  // Called when is called because the store changes
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.url !== this.category.uri) {
-      let category = {
-        uri: nextProps.match.url,
-        name:
-          nextProps.match.params.id.charAt(0).toUpperCase() +
-          nextProps.match.params.id.slice(1)
-      };
-      this.setState({ loaded: false });
-      this.setState({ nextPage: 1 });
-      this.props.setActiveCategory(category);
-      this.category = category;
-    }
-  }
-
-  // Call to the API, only when is mounted for the first time and also when changes because of the store
-  componentDidMount() {
-    this.loadVideos(this.category.uri);
-  }
-
-  // Call to the API, when is going to change the page inside the same component
   componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-      this.loadVideos(this.category.uri);
+    let notSameProps = JSON.stringify(prevProps) !== JSON.stringify(this.props);
+    let notSameState = JSON.stringify(prevState) !== JSON.stringify(this.state);
+    if (notSameProps) {
+      // Start to load the videos for the category
+      this.setState({ loaded: false });
+      this.loadVideos(this.props.activeCategory.uri);
     } else {
-      if (prevState.nextPage !== this.state.nextPage) {
-        this.loadVideos(this.category.uri);
+      if (notSameState && !notSameProps) {
+        this.loadVideos(this.props.activeCategory.uri);
       }
     }
   }
 
   render() {
-    return !this.state.loaded ? (
-      <CircularProgress className="align-self-center" />
-    ) : (
-      <div className="VideoList__wrapper">
+    return (
+      <React.Fragment>
         <Typography
           className="VideoList__title"
           align="left"
           variant="headline"
         >
-          {this.category.name}
+          {this.props.activeCategory.name}
         </Typography>
-        <VideoListPage videos={this.categoryInfo.data} />
+        <Divider />
+        <div className="VideoList__wrapper">
+          {!this.state.loaded ? (
+            <CircularProgress className="align-self-center" />
+          ) : (
+            <VideoListPage videos={this.categoryVideos.data} />
+          )}
+        </div>
         <Divider />
         <div className="Pagination__wrapper">
           <Pagination
             hideDisabled
-            activePage={this.categoryInfo.page}
+            activePage={this.categoryVideos.page}
             onChange={nextPage => this.handlePageChange(nextPage)}
-            itemsCountPerPage={this.categoryInfo.per_page}
-            totalItemsCount={this.categoryInfo.total}
+            itemsCountPerPage={this.categoryVideos.per_page}
+            totalItemsCount={this.categoryVideos.total}
             pageRangeDisplayed={5}
             itemClass="Pagination__item"
             innerClass="Pagination"
@@ -129,7 +107,7 @@ class CategoryView extends React.Component {
             prevPageText="Prev"
           />
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -139,7 +117,9 @@ CategoryView.propTypes = {
   match: PropTypes.object,
   history: PropTypes.object,
   location: PropTypes.object,
-  setActiveCategory: PropTypes.func
+  setActiveCategory: PropTypes.func,
+  isHome: PropTypes.bool,
+  activeCategory: PropTypes.object
 };
 
-export default connect(null, mapDispatchToProps)(CategoryView);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryView);

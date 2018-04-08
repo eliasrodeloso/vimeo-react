@@ -37,12 +37,18 @@ class Item extends React.Component {
     this.state = {
       selected: false
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillMount() {
     if (this.props.activeCategory.uri === this.props.category.uri) {
       this.setState({ selected: true });
     }
+  }
+
+  handleClick() {
+    this.props.history.push(`${this.props.category.uri}`);
+    this.props.setActiveCategory(this.props.category);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,10 +64,7 @@ class Item extends React.Component {
   render() {
     const { category, classes } = this.props;
     return (
-      <ListItem
-        button
-        onClick={evt => this.props.history.push(`${category.uri}`)}
-      >
+      <ListItem button onClick={evt => this.handleClick()}>
         <Avatar
           className={classes.Avatar}
           alt={category.name}
@@ -80,7 +83,8 @@ class Item extends React.Component {
 Item.propTypes = {
   classes: PropTypes.object,
   category: PropTypes.object,
-  activeCategory: PropTypes.object
+  activeCategory: PropTypes.object,
+  setActiveCategory: PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

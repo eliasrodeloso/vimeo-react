@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import GridList, { GridListTile, GridListTileBar } from "material-ui/GridList";
-import { CircularProgress } from "material-ui/Progress";
 
 const Item = ({ video }) => {
   return (
@@ -30,29 +29,26 @@ const Item = ({ video }) => {
 class VideoListPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loaded: false
-    };
     this.List = [];
   }
 
   componentWillMount() {
     const { videos } = this.props;
-    let length = videos.length - 1;
     videos.forEach((video, index) => {
       this.List.push(<Item key={index} video={video} />);
-      if (length === index) {
-        this.setState({ loaded: true });
-      }
     });
   }
 
   render() {
-    return !this.state.loaded ? (
-      <CircularProgress className="align-self-center" />
-    ) : (
+    return (
       <GridList
-        style={{ margin: "none", marginLeft: -2, marginRight: -2 }}
+        spacing={18}
+        style={{
+          margin: "none",
+          marginLeft: -2,
+          marginRight: -2,
+          marginBottom: 0
+        }}
         cellHeight="auto"
       >
         {this.List}

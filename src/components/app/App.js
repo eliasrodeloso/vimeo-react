@@ -10,6 +10,7 @@ import Divider from "material-ui/Divider";
 import { withStyles } from "material-ui/styles";
 import axios from "axios";
 
+
 import "./App.scss";
 import NestedRoutes from "../../route/nested";
 import CategoriesList from "../sideMenu";
@@ -65,7 +66,7 @@ class App extends Component {
           </Toolbar>
         </AppBar>
         <Drawer
-          classes={{ paper: classes.App__paper }}
+        classes={{ paper: classes.App__paper }}
           anchor="left"
           variant="permanent"
         >

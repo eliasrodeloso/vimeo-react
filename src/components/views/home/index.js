@@ -5,7 +5,6 @@ import Typography from "material-ui/Typography";
 import { CircularProgress } from "material-ui/Progress";
 
 import "./index.scss";
-import VideoListPage from "../../commons/videoPage";
 import CategoryView from "../category";
 
 const mapStateToProps = state => {
@@ -34,7 +33,7 @@ class Home extends React.Component {
         >
           {this.props.activeCategory.name}
         </Typography>
-        <VideoListPage videos={this.videos.data} />
+        <CategoryView />
       </div>
     );
   }
