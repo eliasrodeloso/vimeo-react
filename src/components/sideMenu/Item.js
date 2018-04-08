@@ -8,6 +8,14 @@ import { withRouter } from "react-router-dom";
 
 import { setActiveCategory } from "../../store/actions/category.actions";
 
+const mapStateToProps = state => ({
+  activeCategory: state.category
+});
+
+const mapDispatchToProps = dispatch => ({
+  setActiveCategory: category => dispatch(setActiveCategory(category))
+});
+
 const styles = theme => {
   return {
     Avatar: {
@@ -23,15 +31,7 @@ const styles = theme => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  setActiveCategory: category => dispatch(setActiveCategory(category))
-});
-
-const mapStateToProps = state => ({
-  activeCategory: state.category
-});
-
-class Category extends React.Component {
+class Item extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,9 +40,18 @@ class Category extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.index === 0) {
+    if (this.props.activeCategory.uri === this.props.category.uri) {
       this.setState({ selected: true });
-      this.props.setActiveCategory(this.props.category);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
+      if (nextProps.activeCategory.uri === this.props.category.uri) {
+        this.setState({ selected: true });
+      } else {
+        this.setState({ selected: false });
+      }
     }
   }
 
@@ -68,13 +77,12 @@ class Category extends React.Component {
   }
 }
 
-Category.propTypes = {
+Item.propTypes = {
   classes: PropTypes.object,
   category: PropTypes.object,
-  setActiveCategory: PropTypes.func,
   activeCategory: PropTypes.object
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(Category))
+  withRouter(withStyles(styles)(Item))
 );

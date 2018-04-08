@@ -12,3 +12,9 @@ body {
 .tile-link {
   color: #fafafa;
 }
+
+.List__item {
+  &:hover {
+    background-color: rgba(0, 0, 0, $alpha: 0.08);
+  }
+}

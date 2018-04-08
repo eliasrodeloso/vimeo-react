@@ -6,6 +6,7 @@ import { CircularProgress } from "material-ui/Progress";
 
 import "./index.scss";
 import VideoListPage from "../../commons/videoPage";
+import CategoryView from "../category";
 
 const mapStateToProps = state => {
   return {
@@ -19,20 +20,6 @@ class Home extends React.Component {
     this.state = {
       loaded: false
     };
-    this.videos = {};
-  }
-
-  shouldComponentUpdate(nextProps) {
-    if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
-      const { axios, activeCategory } = nextProps;
-      axios.get(`${activeCategory.uri}/videos`).then(response => {
-        if (response.status === 200) {
-          this.videos = response.data;
-          this.setState({ loaded: true });
-        }
-      });
-    }
-    return true;
   }
 
   render() {

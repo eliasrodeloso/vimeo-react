@@ -1,17 +1,15 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Home from "../components/views/home";
+import CategoryView from "../components/views/category";
 
-export default ({ match, axios }) => {
+export default ({ axios }) => {
   return (
     <Switch>
       <Route exact path="/" render={() => <Home axios={axios} />} />
       <Route
         path="/categories/:id"
-        render={({ match }) => {
-          console.log(match);
-          return <div>{match.params.id}</div>;
-        }}
+        render={props => <CategoryView {...props} axios={axios} />}
       />
     </Switch>
   );
