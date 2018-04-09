@@ -37,7 +37,6 @@ class CategoryView extends React.Component {
     axios
       .get(`${uri}/videos?page=${this.state.nextPage}&per_page=27`)
       .then(response => {
-        console.log(response);
         if (response.status === 200) {
           this.categoryVideos = response.data;
           this.setState({ loaded: true });
@@ -67,6 +66,13 @@ class CategoryView extends React.Component {
         // Load the videos for the next page
         this.loadVideos(this.props.activeCategory.uri);
       }
+    }
+  }
+
+  componentDidMount() {
+    const { activeCategory } = this.props;
+    if (Object.keys(activeCategory).length !== 0) {
+      this.loadVideos(activeCategory.uri);
     }
   }
 

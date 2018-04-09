@@ -60,7 +60,6 @@ class Comments extends React.Component {
       .then(response => {
         if (response.status === 200) {
           this.comments = response.data;
-          console.log("Response from comments", response.data);
           this.buildFlatList();
         }
       })
