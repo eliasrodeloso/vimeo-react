@@ -8,9 +8,9 @@ import isAuthed from "../components/HOC/isAuthed";
 export default () => (
   <Router>
     <Switch>
+      <Route exact path="/users/login" component={Login} />
+      <Route exact path="/users/register" component={Register} />
       <Route path="/" component={isAuthed(App)} />
-      <Route path="/users/login" component={Login} />
-      <Route path="/users/register" component={Register} />
     </Switch>
   </Router>
 );

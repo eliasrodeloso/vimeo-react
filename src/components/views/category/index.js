@@ -59,7 +59,7 @@ class CategoryView extends React.Component {
     let notSameState = JSON.stringify(prevState) !== JSON.stringify(this.state);
     if (notSameProps) {
       // Start to load the videos for the category
-      this.setState({ loaded: false });
+      this.setState({ loaded: false, nextPage: 1 });
       this.loadVideos(this.props.activeCategory.uri);
     } else {
       if (notSameState && !notSameProps) {

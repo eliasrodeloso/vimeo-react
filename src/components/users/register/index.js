@@ -13,7 +13,6 @@ import "./index.scss";
 import { doRegister } from "../../../utils/fake-backend";
 
 const helpersText = {
-  username: "You must provide an username",
   fname: "You must provide First name",
   mname: "You must provide Middle name",
   lname: "You must provide Last name",
@@ -35,7 +34,6 @@ export default class Register extends React.Component {
     super(props);
     this.state = initialState;
     this.user = {
-      username: "",
       fname: "",
       lname: "",
       password: "",
@@ -89,17 +87,6 @@ export default class Register extends React.Component {
                   <h1 className="Login-title">React Vimeo</h1>
                 </div>
                 <form className="Login-form">
-                  <div className="form-control">
-                    <TextInput
-                      label="Username"
-                      id="username"
-                      name="username"
-                      validateRules="required"
-                      errorText={helpersText.username}
-                      fullWidth
-                      onChange={field => this.handleChange(field)}
-                    />
-                  </div>
                   <div className="form-control">
                     <TextInput
                       label="First Name"

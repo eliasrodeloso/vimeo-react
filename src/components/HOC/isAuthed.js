@@ -14,18 +14,18 @@ export default RealComponent => {
     };
 
     componentWillMount() {
-      // if (!this.props.user.isLogged) {
-      //   this.props.history.push("/users/login");
-      // }
+      if (!this.props.user.isLogged) {
+        this.props.history.push("/users/login");
+      }
     }
 
     shouldComponentUpdate(nextProps) {
-      // if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
-      //   return false;
-      // }
-      // if (!this.nextProps.user.isLogged) {
-      //   this.props.router.history.push("/users/login");
-      // }
+      if (JSON.stringify(this.props) !== JSON.stringify(nextProps)) {
+        return false;
+      }
+      if (!this.nextProps.user.isLogged) {
+        this.props.router.history.push("/users/login");
+      }
       return true;
     }
 

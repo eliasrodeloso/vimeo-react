@@ -8,13 +8,13 @@ const localUsers = JSON.parse(localStorage.getItem("users")) || [
   }
 ];
 
-export function doLogin(username, password) {
+export function doLogin(email, password) {
   return new Promise((resolve, reject) => {
     // Simulate the server API call
     setTimeout(() => {
       // Authenticate
       let users = localUsers.filter(user => {
-        return user.username === username && user.password === password;
+        return user.email === email && user.password === password;
       });
 
       if (users.length) {

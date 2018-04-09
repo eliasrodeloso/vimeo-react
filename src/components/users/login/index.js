@@ -6,6 +6,7 @@ import Button from "material-ui/Button";
 import Grid from "material-ui/Grid";
 import Paper from "material-ui/Paper";
 import Snackbar from "material-ui/Snackbar";
+import { Link } from "react-router-dom";
 
 import "./index.scss";
 import { doLogin } from "../../../utils/fake-backend";
@@ -18,15 +19,15 @@ const mapDispatchToProps = dispatch => {
 };
 
 const helpersText = {
-  username: "The username field must not be empty",
+  Email: "The Email field must not be empty",
   password: "The password field must not be empty"
 };
 
 const initialState = {
   helperTextPassword: "",
-  helperTextUsername: "",
+  helperTextEmail: "",
   errorPassword: false,
-  errorUsername: false,
+  errorEmail: false,
   openSnackbar: false,
   snackbarMessage: ""
 };
@@ -35,7 +36,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    this.username = "";
+    this.Email = "";
     this.password = "";
     this.submit = this.submit.bind(this);
     this.validate = this.validate.bind(this);
@@ -53,7 +54,7 @@ class Login extends Component {
   submit(evt) {
     evt.preventDefault();
     if (this.validate()) {
-      doLogin(this.username, this.password)
+      doLogin(this.Email, this.password)
         .then(({ json }) => {
           this.props.setUser(json);
           setTimeout(() => {
@@ -62,20 +63,20 @@ class Login extends Component {
         })
         .catch(error => {
           this.setState({ openSnackbar: true, snackbarMessage: error });
-          this.setState({ errorUsername: true, errorPassword: true });
+          this.setState({ errorEmail: true, errorPassword: true });
         });
     }
   }
 
   validate() {
-    if (this.username !== "") {
-      this.setState({ errorUsername: false });
+    if (this.Email !== "") {
+      this.setState({ errorEmail: false });
     } else {
-      this.setState({ errorUsername: true });
-      this.setState({ helperTextUsername: helpersText.username });
+      this.setState({ errorEmail: true });
+      this.setState({ helperTextEmail: helpersText.Email });
     }
     if (this.password !== "") {
-      this.setState({ errorUsername: false });
+      this.setState({ errorEmail: false });
       return true;
     } else {
       this.setState({ errorPassword: true });
@@ -88,8 +89,8 @@ class Login extends Component {
     const {
       helperTextPassword,
       errorPassword,
-      errorUsername,
-      helperTextUsername,
+      errorEmail,
+      helperTextEmail,
       openSnackbar,
       snackbarMessage
     } = this.state;
@@ -105,13 +106,13 @@ class Login extends Component {
                 <form className="Login-form">
                   <div className="form-control">
                     <TextField
-                      label="Username"
-                      id="username"
-                      name="username"
+                      label="Email"
+                      id="email"
+                      name="email"
                       required
-                      onChange={evt => (this.username = evt.target.value)}
-                      error={errorUsername}
-                      helperText={helperTextUsername}
+                      onChange={evt => (this.Email = evt.target.value)}
+                      error={errorEmail}
+                      helperText={helperTextEmail}
                       fullWidth
                     />
                   </div>
@@ -128,7 +129,10 @@ class Login extends Component {
                       fullWidth
                     />
                   </div>
-                  <div className="form-control form-control--submit">
+                  <div className="form-control form-control--centered">
+                    <Link to="/users/register">Not registered?</Link>
+                  </div>
+                  <div className="form-control form-control--centered">
                     <Button
                       onClick={evt => this.submit(evt)}
                       variant="raised"
