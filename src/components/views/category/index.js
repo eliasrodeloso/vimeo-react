@@ -64,6 +64,7 @@ class CategoryView extends React.Component {
       this.loadVideos(this.props.activeCategory.uri);
     } else {
       if (notSameState && !notSameProps) {
+        // Load the videos for the next page
         this.loadVideos(this.props.activeCategory.uri);
       }
     }

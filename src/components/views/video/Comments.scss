@@ -1,0 +1,23 @@
+.Comment {
+  &__wrapper {
+    display: flex;
+    padding: 1rem 0;
+    &:not(:last-of-type) {
+      border-bottom: 1px solid #afafaf;
+    }
+  }
+  &__Avatar {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__Info {
+    width: 90%;
+  }
+
+  &__Text {
+    margin-top: 1rem;
+  }
+}

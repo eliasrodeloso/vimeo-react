@@ -1,0 +1,44 @@
+.Video {
+  &__embed {
+    width: 100%;
+    height: 550px;
+    margin-bottom: 1rem;
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 1rem 0;
+  }
+
+  &__Description {
+    margin: 1rem 0;
+  }
+
+  &__Comments {
+    text-align: left;
+  }
+}
+
+.User {
+  &__Avatar {
+    display: inline-block !important;
+    width: 30px !important;
+    height: 30px !important;
+    margin-right: 1rem;
+
+    &--bg {
+      width: 75px !important;
+      height: 75px !important;
+    }
+  }
+
+  &__Button {
+    padding: 0.5rem !important;
+  }
+}
