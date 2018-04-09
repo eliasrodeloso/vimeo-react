@@ -1,0 +1,12 @@
+@import "../../style/_variables.scss";
+
+.App {
+  width: 100%;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+
+  &__title {
+    flex: 1;
+  }
+}

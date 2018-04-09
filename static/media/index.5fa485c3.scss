@@ -1,0 +1,10 @@
+.Register {
+  &-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+    background: linear-gradient(to right, #ff0080, #ff8c00, #40e0d0);
+  }
+}

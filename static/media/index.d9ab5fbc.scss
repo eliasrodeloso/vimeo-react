@@ -1,0 +1,34 @@
+@import "../../../style/_variables";
+
+.Login {
+  &-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #f7b733, #fc4a1a);
+  }
+
+  &-inner {
+    width: 600px;
+  }
+
+  &-form {
+    padding: $gutters;
+  }
+
+  &-title {
+    text-align: center;
+  }
+}
+
+.form-control {
+  &:not(:last-of-type) {
+    margin-bottom: $gutters;
+  }
+
+  &--centered {
+    text-align: center;
+  }
+}
