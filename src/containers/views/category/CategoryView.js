@@ -8,7 +8,7 @@ import Pagination from "react-js-pagination";
 
 import "./index.scss";
 import { setActiveCategory } from "../../../store/actions/category.actions";
-import VideoListPage from "./VideoListPage";
+import VideoListPage from "../../../components/categoryView/VideoListPage";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -27,24 +27,8 @@ class CategoryView extends React.Component {
       loaded: false,
       nextPage: 1
     };
-    this.loadVideos = this.loadVideos.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
     this.categoryVideos = [];
-  }
-
-  loadVideos(uri, page = 1) {
-    const { axios } = this.props;
-    axios
-      .get(`${uri}/videos?page=${this.state.nextPage}&per_page=27`)
-      .then(response => {
-        if (response.status === 200) {
-          this.categoryVideos = response.data;
-          this.setState({ loaded: true });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }
 
   handlePageChange(nextPage) {
@@ -56,16 +40,11 @@ class CategoryView extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     let notSameProps = JSON.stringify(prevProps) !== JSON.stringify(this.props);
-    let notSameState = JSON.stringify(prevState) !== JSON.stringify(this.state);
+
     if (notSameProps) {
       // Start to load the videos for the category
       this.setState({ loaded: false, nextPage: 1 });
-      this.loadVideos(this.props.activeCategory.uri);
     } else {
-      if (notSameState && !notSameProps) {
-        // Load the videos for the next page
-        this.loadVideos(this.props.activeCategory.uri);
-      }
     }
   }
 
@@ -120,10 +99,6 @@ class CategoryView extends React.Component {
 }
 
 CategoryView.propTypes = {
-  axios: PropTypes.func,
-  match: PropTypes.object,
-  history: PropTypes.object,
-  location: PropTypes.object,
   setActiveCategory: PropTypes.func,
   isHome: PropTypes.bool,
   activeCategory: PropTypes.object

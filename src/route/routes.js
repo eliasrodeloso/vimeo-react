@@ -5,10 +5,13 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import Login from "../components/users/login";
-import Register from "../components/users/register";
-import App from "../components/app/App";
 import { connect } from "react-redux";
+
+import RegisterView from "../containers/views/users/register/RegisterView";
+import CategoryView from "../containers/views/category/CategoryView";
+import LoginView from "../containers/views/users/login/LoginView";
+import VideoView from "../containers/views/video/VideoView";
+import App from "../components/app/App";
 
 const mapStateToProps = state => ({
   user: state.user
@@ -37,11 +40,13 @@ const PrivateRoute = connect(mapStateToProps)(
 export default () => (
   <Router>
     <Switch>
-      <PrivateRoute exact path="/" component={App} isHome />
-      <Route path="/users/login" component={Login} />
-      <Route path="/users/register" component={Register} />
-      <PrivateRoute path="/categories/:id" component={App} />
-      <PrivateRoute path="/videos/:id" component={App} />
+      <Route path="/users/login" component={LoginView} />
+      <Route path="/users/register" component={RegisterView} />
+      <App>
+        <PrivateRoute exact path="/" component={CategoryView} isHome />
+        <PrivateRoute path="/categories/:id" component={CategoryView} />
+        <PrivateRoute path="/videos/:id" component={VideoView} />
+      </App>
     </Switch>
   </Router>
 );

@@ -6,11 +6,11 @@ import Button from "material-ui/Button";
 import Snackbar from "material-ui/Snackbar";
 import { FormControl, FormLabel } from "material-ui/Form";
 import Input from "material-ui/Input";
-import TextInput from "../../commons/input";
 import mapValues from "lodash/mapValues";
 
 import "./index.scss";
-import { doRegister } from "../../../utils/fake-backend";
+import TextInput from "../../../../components/commons/input/TextInput";
+import { doRegister } from "../../../../utils/fake-backend";
 
 const helpersText = {
   fname: "You must provide First name",

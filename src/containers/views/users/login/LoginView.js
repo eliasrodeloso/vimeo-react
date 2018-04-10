@@ -9,8 +9,8 @@ import Snackbar from "material-ui/Snackbar";
 import { Link } from "react-router-dom";
 
 import "./index.scss";
-import { doLogin } from "../../../utils/fake-backend";
-import { setUser } from "../../../store/actions/user.actions";
+import { doLogin } from "../../../../utils/fake-backend";
+import { setUser } from "../../../../store/actions/user.actions";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -94,7 +94,6 @@ class Login extends Component {
       openSnackbar,
       snackbarMessage
     } = this.state;
-    console.log(this.props);
     return (
       <div className="Login-wrapper">
         <div className="Login-inner">

@@ -6,9 +6,9 @@ import Typography from "material-ui/Typography";
 import Divider from "material-ui/Divider";
 import Avatar from "material-ui/Avatar";
 import moment from "moment";
-import Comments from "./Comments";
 
 import "./index.scss";
+import Comments from "../../../components/videoView/Comments";
 import { setActiveCategory } from "../../../store/actions/category.actions";
 
 const mapDispatchToProps = dispatch => ({
@@ -23,25 +23,9 @@ class VideoView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false
+      loaded: false,
+      video: {}
     };
-    this.video = {};
-  }
-
-  componentDidMount() {
-    const { axios, videoId, activeCategory } = this.props;
-    axios
-      .get(`/videos/${videoId}`)
-      .then(response => {
-        if (response.status === 200) {
-          this.video = response.data;
-          this.setState({ loaded: true });
-          if (Object.keys(activeCategory).length === 0) {
-            this.props.setActiveCategory(response.data.categories[0]);
-          }
-        }
-      })
-      .catch(error => console.log(error));
   }
 
   render() {
@@ -92,8 +76,9 @@ class VideoView extends React.Component {
 }
 
 VideoView.propTypes = {
-  axios: PropTypes.func,
-  videoId: PropTypes.string.isRequired
+  videoId: PropTypes.string.isRequired,
+  setActiveCategory: PropTypes.func.isRequired,
+  activeCategory: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoView);
