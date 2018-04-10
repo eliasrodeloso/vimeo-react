@@ -43,7 +43,7 @@ export default () => (
       <Route path="/users/login" component={LoginContainer} />
       <Route path="/users/register" component={RegisterContainer} />
       <App>
-        <PrivateRoute exact path="/" component={CategoryContainer} isHome />
+        <Route exact path="/" component={CategoryContainer} isHome />
         <PrivateRoute path="/categories/:id" component={CategoryContainer} />
         <PrivateRoute path="/videos/:id" component={VideoContainer} />
       </App>

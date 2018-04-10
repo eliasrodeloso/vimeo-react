@@ -8,7 +8,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case PUT_USER:
-      return { user: { ...action.user }, isLogged: true };
+      return { ...state, user: { ...action.user }, isLogged: true };
 
     default:
       return state;

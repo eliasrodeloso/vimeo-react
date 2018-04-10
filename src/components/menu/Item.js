@@ -1,20 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { ListItem, ListItemText } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import { withStyles } from "material-ui/styles";
-import { withRouter } from "react-router-dom";
-
-import { setActiveCategory } from "../../store/actions/category.actions";
-
-const mapStateToProps = state => ({
-  activeCategory: state.category
-});
-
-const mapDispatchToProps = dispatch => ({
-  setActiveCategory: category => dispatch(setActiveCategory(category))
-});
 
 const styles = theme => {
   return {
@@ -34,37 +22,18 @@ const styles = theme => {
 class Item extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: false
-    };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillMount() {
-    if (this.props.activeCategory.uri === this.props.category.uri) {
-      this.setState({ selected: true });
-    }
-  }
-
-  handleClick() {
-    this.props.history.push(`${this.props.category.uri}`);
-    this.props.setActiveCategory(this.props.category);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
-      if (nextProps.activeCategory.uri === this.props.category.uri) {
-        this.setState({ selected: true });
-      } else {
-        this.setState({ selected: false });
-      }
-    }
+  handleClick(evt) {
+    evt.preventDefault();
+    this.props.onClick(this.props.category.uri);
   }
 
   render() {
     const { category, classes } = this.props;
     return (
-      <ListItem button onClick={evt => this.handleClick()}>
+      <ListItem button onClick={this.handleClick}>
         <Avatar
           className={classes.Avatar}
           alt={category.name}
@@ -72,7 +41,7 @@ class Item extends React.Component {
           src={category.icon.sizes[0].link}
         />
         <ListItemText
-          classes={{ primary: this.state.selected ? classes.selected : "" }}
+          classes={{ primary: this.props.selected ? classes.selected : "" }}
           primary={category.name}
         />
       </ListItem>
@@ -81,12 +50,9 @@ class Item extends React.Component {
 }
 
 Item.propTypes = {
-  classes: PropTypes.object,
-  category: PropTypes.object,
-  activeCategory: PropTypes.object,
-  setActiveCategory: PropTypes.func
+  classes: PropTypes.object.isRequired,
+  category: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(withStyles(styles)(Item))
-);
+export default withStyles(styles)(Item);

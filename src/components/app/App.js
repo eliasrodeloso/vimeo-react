@@ -10,7 +10,7 @@ import Divider from "material-ui/Divider";
 import { withStyles } from "material-ui/styles";
 
 import "./App.scss";
-import CategoriesList from "../menu/RightMenu";
+import MenuContainer from "../../containers/MenuContainer";
 
 const drawerWidth = 280;
 
@@ -57,7 +57,7 @@ class App extends Component {
         >
           <div className={classes.Toolbar} />
           <Divider />
-          <CategoriesList axios={this.axios} />
+          <MenuContainer />
         </Drawer>
         <main className={classes.App__main}>
           <div className={classes.Toolbar} />
