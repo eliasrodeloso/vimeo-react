@@ -43,7 +43,6 @@ class MenuContainer extends React.Component {
 
   buildFlatList(categories, nextActiveCategory = {}) {
     let arr = [];
-    console.log(nextActiveCategory);
     categories.forEach((category, index) => {
       arr.push(
         <Item

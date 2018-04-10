@@ -14,8 +14,8 @@ export const setCategories = categories => ({
 export function fetchCategoriesList() {
   return dispatch => {
     getCategoriesList().then(response => {
-      console.log(response);
       dispatch(setCategories(response.data));
+      dispatch(setActiveCategory(response.data[0]));
     });
   };
 }
