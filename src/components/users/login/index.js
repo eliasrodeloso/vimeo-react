@@ -94,6 +94,7 @@ class Login extends Component {
       openSnackbar,
       snackbarMessage
     } = this.state;
+    console.log(this.props);
     return (
       <div className="Login-wrapper">
         <div className="Login-inner">

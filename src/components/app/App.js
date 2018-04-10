@@ -9,10 +9,10 @@ import Drawer from "material-ui/Drawer";
 import Divider from "material-ui/Divider";
 import { withStyles } from "material-ui/styles";
 import axios from "axios";
-
+import CategoryView from "../views/category";
+import VideoView from "../views/video";
 
 import "./App.scss";
-import NestedRoutes from "../../route/nested";
 import CategoriesList from "../sideMenu";
 
 const drawerWidth = 280;
@@ -51,6 +51,50 @@ class App extends Component {
         Accept: "application/vnd.vimeo.*+json;version=3.4"
       }
     });
+    this.state = {
+      isHome: true,
+      isCategoryView: false,
+      isVideoView: false
+    };
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    let notSameProps = JSON.stringify(nextProps) !== JSON.stringify(this.props);
+    if (notSameProps) {
+      switch (nextProps.match.path) {
+        case "/":
+          this.setState({
+            isHome: true,
+            isCategoryView: false,
+            isVideoView: false
+          });
+          break;
+
+        case "/categories/:id":
+          this.setState({
+            isHome: false,
+            isCategoryView: true,
+            isVideoView: false
+          });
+          break;
+
+        case "/videos/:id":
+          this.setState({
+            isHome: false,
+            isCategoryView: false,
+            isVideoView: true
+          });
+          break;
+
+        default:
+          this.setState({
+            isHome: true,
+            isCategoryView: false,
+            isVideoView: false
+          });
+          break;
+      }
+    }
   }
 
   render() {
@@ -66,7 +110,7 @@ class App extends Component {
           </Toolbar>
         </AppBar>
         <Drawer
-        classes={{ paper: classes.App__paper }}
+          classes={{ paper: classes.App__paper }}
           anchor="left"
           variant="permanent"
         >
@@ -77,7 +121,14 @@ class App extends Component {
         <main className={classes.App__main}>
           <div className={classes.Toolbar} />
           <div className={classes.content}>
-            <NestedRoutes axios={this.axios} />
+            {this.state.isHome && <CategoryView isHome axios={this.axios} />}
+            {this.state.isCategoryView && <CategoryView axios={this.axios} />}
+            {this.state.isVideoView && (
+              <VideoView
+                videoId={this.props.match.params.id}
+                axios={this.axios}
+              />
+            )}
           </div>
         </main>
       </div>

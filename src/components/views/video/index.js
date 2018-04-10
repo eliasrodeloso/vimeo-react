@@ -29,9 +29,9 @@ class VideoView extends React.Component {
   }
 
   componentDidMount() {
-    const { axios, match, activeCategory } = this.props;
+    const { axios, videoId, activeCategory } = this.props;
     axios
-      .get(`/videos/${match.params.id}`)
+      .get(`/videos/${videoId}`)
       .then(response => {
         if (response.status === 200) {
           this.video = response.data;
@@ -82,10 +82,7 @@ class VideoView extends React.Component {
             </div>
             <Divider className="Divider" />
             <div className="Video__Comments">
-              <Comments
-                axios={this.props.axios}
-                video={this.props.match.params.id}
-              />
+              <Comments axios={this.props.axios} video={this.props.videoId} />
             </div>
           </React.Fragment>
         )}
@@ -96,9 +93,7 @@ class VideoView extends React.Component {
 
 VideoView.propTypes = {
   axios: PropTypes.func,
-  match: PropTypes.object,
-  history: PropTypes.object,
-  location: PropTypes.object
+  videoId: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoView);
