@@ -35,7 +35,7 @@ export function doRegister(userInfo) {
         let users = JSON.parse(localStorage.getItem("users")) || [];
         users = [...users, { ...userInfo, id: uuid() }];
         localStorage.setItem("users", JSON.stringify(users));
-        resolve({ ok: true, json: { message: "Succesfully added" } });
+        resolve({ ok: true, json: { user: userInfo } });
       } catch (error) {
         reject(error);
       }

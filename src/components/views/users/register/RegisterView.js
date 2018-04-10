@@ -28,7 +28,7 @@ const initialState = {
   submitDisabled: true
 };
 
-class Register extends React.Component {
+class RegisterView extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -45,9 +45,25 @@ class Register extends React.Component {
     this.submit = this.submit.bind(this);
   }
 
-  static contextType = {
-    router: PropTypes.object
-  };
+  componentWillMount() {
+    this.setState({
+      snackbar: {
+        open: this.props.openSnackbar,
+        message: this.props.snackbarMessage
+      }
+    });
+  }
+
+  componentWillUpdate(nextProps) {
+    if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
+      this.setState({
+        snackbar: {
+          open: nextProps.openSnackbar,
+          message: nextProps.snackbarMessage
+        }
+      });
+    }
+  }
 
   closeSnackbar() {
     this.setState({ snackbar: { open: false, message: "" } });
@@ -55,6 +71,7 @@ class Register extends React.Component {
 
   submit(evt) {
     evt.preventDefault();
+    this.props.submit(this.user);
   }
 
   handleChange(field) {
@@ -187,4 +204,10 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+RegisterView.propTypes = {
+  submit: PropTypes.func.isRequired,
+  openSnackbar: PropTypes.bool.isRequired,
+  snackbarMessage: PropTypes.string.isRequired
+};
+
+export default RegisterView;
