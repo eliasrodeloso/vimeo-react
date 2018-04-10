@@ -10,7 +10,7 @@ import Divider from "material-ui/Divider";
 import { withStyles } from "material-ui/styles";
 
 import "./App.scss";
-import CategoriesList from "../../containers/menu/RightMenu";
+import CategoriesList from "../menu/RightMenu";
 
 const drawerWidth = 280;
 

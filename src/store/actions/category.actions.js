@@ -1,6 +1,11 @@
-import { SET_ACTIVE_CATEGORY } from "../constants";
+import { SET_ACTIVE_CATEGORY, SET_CATEGORIES } from "../constants";
 
-export const setActiveCategory = category => ({
+export const setActiveCategory = activeCategory => ({
   type: SET_ACTIVE_CATEGORY,
-  category
+  activeCategory
+});
+
+export const setCategories = categories => ({
+  type: SET_CATEGORIES,
+  categories
 });

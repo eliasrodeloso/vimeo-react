@@ -1,23 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { CircularProgress } from "material-ui/Progress";
-import { connect } from "react-redux";
 import Typography from "material-ui/Typography";
 import Divider from "material-ui/Divider";
 import Avatar from "material-ui/Avatar";
 import moment from "moment";
 
 import "./index.scss";
-import Comments from "../../../components/videoView/Comments";
-import { setActiveCategory } from "../../../store/actions/category.actions";
-
-const mapDispatchToProps = dispatch => ({
-  setActiveCategory: category => dispatch(setActiveCategory(category))
-});
-
-const mapStateToProps = state => ({
-  activeCategory: state.category
-});
+import Comments from "./Comments";
 
 class VideoView extends React.Component {
   constructor(props) {
@@ -76,9 +66,7 @@ class VideoView extends React.Component {
 }
 
 VideoView.propTypes = {
-  videoId: PropTypes.string.isRequired,
-  setActiveCategory: PropTypes.func.isRequired,
-  activeCategory: PropTypes.object.isRequired
+  videoId: PropTypes.string.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(VideoView);
+export default VideoView;

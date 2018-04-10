@@ -9,8 +9,7 @@ import Input from "material-ui/Input";
 import mapValues from "lodash/mapValues";
 
 import "./index.scss";
-import TextInput from "../../../../components/commons/input/TextInput";
-import { doRegister } from "../../../../utils/fake-backend";
+import TextInput from "../../../commons/input/TextInput";
 
 const helpersText = {
   fname: "You must provide First name",
@@ -29,7 +28,7 @@ const initialState = {
   submitDisabled: true
 };
 
-export default class Register extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -56,10 +55,6 @@ export default class Register extends React.Component {
 
   submit(evt) {
     evt.preventDefault();
-    doRegister(this.user).then(({ json }) => {
-      this.setState({ snackbar: { open: true, message: json.message } });
-      this.props.history.push("/");
-    });
   }
 
   handleChange(field) {
@@ -191,3 +186,5 @@ export default class Register extends React.Component {
     );
   }
 }
+
+export default Register;

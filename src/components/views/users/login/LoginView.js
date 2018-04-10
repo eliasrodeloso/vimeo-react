@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import TextField from "material-ui/TextField";
 import Button from "material-ui/Button";
 import Grid from "material-ui/Grid";
@@ -9,14 +8,6 @@ import Snackbar from "material-ui/Snackbar";
 import { Link } from "react-router-dom";
 
 import "./index.scss";
-import { doLogin } from "../../../../utils/fake-backend";
-import { setUser } from "../../../../store/actions/user.actions";
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setUser: user => dispatch(setUser(user))
-  };
-};
 
 const helpersText = {
   Email: "The Email field must not be empty",
@@ -32,7 +23,7 @@ const initialState = {
   snackbarMessage: ""
 };
 
-class Login extends Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -43,9 +34,21 @@ class Login extends Component {
     this.closeSnackbar = this.closeSnackbar.bind(this);
   }
 
-  static contextType = {
-    router: PropTypes.object
-  };
+  componentWillMount() {
+    this.setState({
+      openSnackbar: this.props.openSnackbar,
+      snackbarMessage: this.props.snackbarMessage
+    });
+  }
+
+  componentWillUpdate(nextProps) {
+    if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
+      this.setState({
+        openSnackbar: nextProps.openSnackbar,
+        snackbarMessage: nextProps.snackbarMessage
+      });
+    }
+  }
 
   closeSnackbar() {
     this.setState({ openSnackbar: false });
@@ -54,17 +57,7 @@ class Login extends Component {
   submit(evt) {
     evt.preventDefault();
     if (this.validate()) {
-      doLogin(this.Email, this.password)
-        .then(({ json }) => {
-          this.props.setUser(json);
-          setTimeout(() => {
-            this.props.history.push("/");
-          }, 550);
-        })
-        .catch(error => {
-          this.setState({ openSnackbar: true, snackbarMessage: error });
-          this.setState({ errorEmail: true, errorPassword: true });
-        });
+      this.props.submit({ email: this.Email, password: this.password });
     }
   }
 
@@ -169,7 +162,9 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  setUser: PropTypes.func
+  submit: PropTypes.func.isRequired,
+  snackbarMessage: PropTypes.string,
+  openSnackbar: PropTypes.bool
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 
-import RegisterView from "../containers/views/users/register/RegisterView";
-import CategoryView from "../containers/views/category/CategoryView";
-import LoginView from "../containers/views/users/login/LoginView";
-import VideoView from "../containers/views/video/VideoView";
+import RegisterContainer from "../containers/RegisterContainer";
+import LoginContainer from "../containers/LoginContainer";
+import CategoryContainer from "../containers/CategoryContainer";
+import VideoContainer from "../containers/VideoContainer";
 import App from "../components/app/App";
 
 const mapStateToProps = state => ({
@@ -40,12 +40,12 @@ const PrivateRoute = connect(mapStateToProps)(
 export default () => (
   <Router>
     <Switch>
-      <Route path="/users/login" component={LoginView} />
-      <Route path="/users/register" component={RegisterView} />
+      <Route path="/users/login" component={LoginContainer} />
+      <Route path="/users/register" component={RegisterContainer} />
       <App>
-        <PrivateRoute exact path="/" component={CategoryView} isHome />
-        <PrivateRoute path="/categories/:id" component={CategoryView} />
-        <PrivateRoute path="/videos/:id" component={VideoView} />
+        <PrivateRoute exact path="/" component={CategoryContainer} isHome />
+        <PrivateRoute path="/categories/:id" component={CategoryContainer} />
+        <PrivateRoute path="/videos/:id" component={VideoContainer} />
       </App>
     </Switch>
   </Router>

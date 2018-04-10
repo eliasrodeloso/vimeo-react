@@ -1,24 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { CircularProgress } from "material-ui/Progress";
 import Typography from "material-ui/Typography";
 import Divider from "material-ui/Divider";
 import Pagination from "react-js-pagination";
 
 import "./index.scss";
-import { setActiveCategory } from "../../../store/actions/category.actions";
-import VideoListPage from "../../../components/categoryView/VideoListPage";
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setActiveCategory: category => dispatch(setActiveCategory(category))
-  };
-};
-
-const mapStateToProps = state => ({
-  activeCategory: state.category
-});
+import VideoListPage from "./VideoListPage";
 
 class CategoryView extends React.Component {
   constructor(props) {
@@ -99,9 +87,7 @@ class CategoryView extends React.Component {
 }
 
 CategoryView.propTypes = {
-  setActiveCategory: PropTypes.func,
-  isHome: PropTypes.bool,
-  activeCategory: PropTypes.object
+  isHome: PropTypes.bool
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryView);
+export default CategoryView;
