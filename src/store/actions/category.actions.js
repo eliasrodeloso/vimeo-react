@@ -42,8 +42,9 @@ export function fetchCategoriesList(isHome, location = "/") {
 
 export function fetchCategoryVideos(uri, page = 1, perPage = 27) {
   return dispatch => {
-    getCategoryVideos(uri, page, perPage).then(response => {
-      dispatch(setCategoryVideos(response.data));
+    return getCategoryVideos(uri, page, perPage).then(response => {
+      dispatch(setCategoryVideos(response));
+      return true;
     });
   };
 }

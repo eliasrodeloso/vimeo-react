@@ -7,7 +7,7 @@ import {
 const initialState = {
   activeCategory: {},
   categories: [],
-  categoryVideos: []
+  categoryVideos: {}
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -19,7 +19,7 @@ const categoryReducer = (state = initialState, action) => {
       return { ...state, categories: [...action.categories] };
 
     case SET_CATEGORY_VIDEOS:
-      return { ...state, categoryVideos: [...action.videos] };
+      return { ...state, categoryVideos: { ...action.videos } };
 
     default:
       return state;

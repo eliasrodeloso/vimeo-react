@@ -18,7 +18,7 @@ const Item = ({ video }) => {
             by:{" "}
             <a className="tile-link" href={video.user.link}>
               {video.user.name}
-            </a>{" "}
+            </a>
           </span>
         }
       />
@@ -29,13 +29,19 @@ const Item = ({ video }) => {
 class VideoListPage extends React.Component {
   constructor(props) {
     super(props);
-    this.List = [];
+    this.state = {
+      list: []
+    };
   }
 
   componentWillMount() {
     const { videos } = this.props;
+    let arr = [];
     videos.forEach((video, index) => {
-      this.List.push(<Item key={index} video={video} />);
+      arr.push(<Item key={index} video={video} />);
+      this.setState({
+        list: arr
+      });
     });
   }
 
@@ -51,7 +57,7 @@ class VideoListPage extends React.Component {
         }}
         cellHeight="auto"
       >
-        {this.List}
+        {this.state.list}
       </GridList>
     );
   }
