@@ -41,45 +41,13 @@ const Comment = ({ comment }) => {
 class Comments extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loaded: false,
-      commentsPage: 1
-    };
-    this.comments = {};
-    this.loadComments = this.loadComments.bind(this);
-    this.buildFlatList = this.buildFlatList.bind(this);
     this.CommentsList = [];
   }
 
-  loadComments() {
-    const { axios, video } = this.props;
-    axios
-      .get(
-        `/videos/${video}/comments?page=${this.state.commentsPage}&per_page=10`
-      )
-      .then(response => {
-        if (response.status === 200) {
-          this.comments = response.data;
-          this.buildFlatList();
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  buildFlatList() {
-    const length = this.comments.data.length - 1;
-    this.comments.data.forEach((comment, index) => {
+  componentWillMount() {
+    this.props.comments.forEach((comment, index) => {
       this.CommentsList.push(<Comment key={index} comment={comment} />);
-      if (index === length) {
-        this.setState({ loaded: true });
-      }
     });
-  }
-
-  componentDidMount() {
-    this.loadComments();
   }
 
   render() {
@@ -88,7 +56,7 @@ class Comments extends React.Component {
         <Typography align="left" variant="headline">
           Comments
         </Typography>
-        {this.state.loaded ? (
+        {this.props.loaded ? (
           this.CommentsList
         ) : (
           <CircularProgress className="align-self-center" />
@@ -99,8 +67,8 @@ class Comments extends React.Component {
 }
 
 Comments.propTypes = {
-  axios: PropTypes.func,
-  video: PropTypes.string
+  loaded: PropTypes.bool,
+  comments: PropTypes.array
 };
 
 export default Comments;
