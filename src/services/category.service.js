@@ -8,3 +8,13 @@ export let getCategoriesList = () => {
     }
   });
 };
+
+export let getCategoryVideos = (categoryId, page, perPage) => {
+  return axios
+    .get(endpoints.categoryVideos(categoryId, page, perPage))
+    .then(response => {
+      if (response.status === 200) {
+        return response.data;
+      }
+    });
+};

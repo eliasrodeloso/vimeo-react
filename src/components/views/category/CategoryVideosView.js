@@ -8,7 +8,7 @@ import Pagination from "react-js-pagination";
 import "./index.scss";
 import VideoListPage from "./VideoListPage";
 
-class CategoryView extends React.Component {
+class CategoryVideosView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,8 +86,8 @@ class CategoryView extends React.Component {
   }
 }
 
-CategoryView.propTypes = {
+CategoryVideosView.propTypes = {
   isHome: PropTypes.bool
 };
 
-export default CategoryView;
+export default CategoryVideosView;

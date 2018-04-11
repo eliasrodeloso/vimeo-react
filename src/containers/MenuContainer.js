@@ -38,7 +38,14 @@ class MenuContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.actions.fetchCategoriesList();
+    if (this.props.location.pathname === "/") {
+      this.props.actions.fetchCategoriesList(true);
+    } else {
+      this.props.actions.fetchCategoriesList(
+        false,
+        this.props.location.pathname
+      );
+    }
   }
 
   buildFlatList(categories, nextActiveCategory = {}) {

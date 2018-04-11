@@ -1,5 +1,12 @@
-import { SET_ACTIVE_CATEGORY, SET_CATEGORIES } from "../constants";
-import { getCategoriesList } from "../../services/category.service";
+import {
+  SET_ACTIVE_CATEGORY,
+  SET_CATEGORIES,
+  SET_CATEGORY_VIDEOS
+} from "../constants";
+import {
+  getCategoriesList,
+  getCategoryVideos
+} from "../../services/category.service";
 
 export const setActiveCategory = activeCategory => ({
   type: SET_ACTIVE_CATEGORY,
@@ -11,11 +18,32 @@ export const setCategories = categories => ({
   categories
 });
 
-export function fetchCategoriesList() {
+export const setCategoryVideos = videos => ({
+  type: SET_CATEGORY_VIDEOS,
+  videos
+});
+
+export function fetchCategoriesList(isHome, location = "/") {
   return dispatch => {
     getCategoriesList().then(response => {
       dispatch(setCategories(response.data));
-      dispatch(setActiveCategory(response.data[0]));
+      if (isHome) {
+        dispatch(setActiveCategory(response.data[0]));
+      } else {
+        response.data.forEach(category => {
+          if (category.uri === location) {
+            dispatch(setActiveCategory(category));
+          }
+        });
+      }
+    });
+  };
+}
+
+export function fetchCategoryVideos(uri, page = 1, perPage = 27) {
+  return dispatch => {
+    getCategoryVideos(uri, page, perPage).then(response => {
+      dispatch(setCategoryVideos(response.data));
     });
   };
 }

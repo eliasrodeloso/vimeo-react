@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 import RegisterContainer from "../containers/RegisterContainer";
 import LoginContainer from "../containers/LoginContainer";
-import CategoryContainer from "../containers/CategoryContainer";
+import CategoryVideosContainer from "../containers/CategoryContainer";
 import VideoContainer from "../containers/VideoContainer";
 import App from "../components/app/App";
 
@@ -43,8 +43,8 @@ export default () => (
       <Route path="/users/login" component={LoginContainer} />
       <Route path="/users/register" component={RegisterContainer} />
       <App>
-        <Route exact path="/" component={CategoryContainer} isHome />
-        <PrivateRoute path="/categories/:id" component={CategoryContainer} />
+        <Route exact path="/" component={CategoryVideosContainer} isHome />
+        <Route path="/categories/:id" component={CategoryVideosContainer} />
         <PrivateRoute path="/videos/:id" component={VideoContainer} />
       </App>
     </Switch>

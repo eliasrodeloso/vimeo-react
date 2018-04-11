@@ -14,7 +14,7 @@ export let endpoints = {
   video: id => {
     return `/videos/${id}`;
   },
-  categoryVideos(categoryId, page = 1, perPage = 27) {
-    return `/categories/${categoryId}/videos?page=${page}&per_page=${perPage}`;
+  categoryVideos: (categoryId, page, perPage) => {
+    return `${categoryId}/videos?page=${page}&per_page=${perPage}`;
   }
 };

@@ -1,8 +1,13 @@
-import { SET_ACTIVE_CATEGORY, SET_CATEGORIES } from "../constants";
+import {
+  SET_ACTIVE_CATEGORY,
+  SET_CATEGORIES,
+  SET_CATEGORY_VIDEOS
+} from "../constants";
 
 const initialState = {
   activeCategory: {},
-  categories: []
+  categories: [],
+  categoryVideos: []
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -12,6 +17,9 @@ const categoryReducer = (state = initialState, action) => {
 
     case SET_CATEGORIES:
       return { ...state, categories: [...action.categories] };
+
+    case SET_CATEGORY_VIDEOS:
+      return { ...state, categoryVideos: [...action.videos] };
 
     default:
       return state;
