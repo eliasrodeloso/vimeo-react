@@ -6,11 +6,16 @@ import {
   fetchVideo,
   fetchVideoAndComments
 } from "../store/actions/video.actions";
+import { setActiveCategory } from "../store/actions/category.actions";
 import VideoView from "../components/views/video/VideoView";
 import Comments from "../components/views/video/Comments";
 
-const mapStateToProps = ({ video }) => ({
-  store: { video: video.video, comments: video.comments }
+const mapStateToProps = ({ video, category }) => ({
+  store: {
+    video: video.video,
+    comments: video.comments,
+    activeCategory: category.activeCategory
+  }
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -20,7 +25,8 @@ const mapDispatchToProps = dispatch => ({
     },
     fetchVideoAndComments: (videoId, page, perPage) => {
       dispatch(fetchVideoAndComments(videoId, page, perPage));
-    }
+    },
+    setActiveCategory: category => dispatch(setActiveCategory(category))
   }
 });
 
@@ -34,6 +40,16 @@ class VideoContainer extends React.Component {
 
   componentDidMount() {
     this.props.actions.fetchVideoAndComments(this.props.match.params.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+      if (!this.props.store.activeCategory.uri) {
+        this.props.actions.setActiveCategory(
+          this.props.store.video.categories[0]
+        );
+      }
+    }
   }
 
   static getDerivedStateFromProps(nextProps) {
