@@ -44,7 +44,7 @@ export function fetchCategoryVideos(uri, page = 1, perPage = 27) {
   return dispatch => {
     return getCategoryVideos(uri, page, perPage).then(response => {
       dispatch(setCategoryVideos(response));
-      return true;
+      return uri;
     });
   };
 }

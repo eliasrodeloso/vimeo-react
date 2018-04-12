@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 
 import {
   fetchVideo,
-  fetchVideoAndComments
+  fetchVideoAndComments,
+  setVideo,
+  setVideoComments
 } from "../store/actions/video.actions";
 import { setActiveCategory } from "../store/actions/category.actions";
 import VideoView from "../components/views/video/VideoView";
@@ -26,7 +28,9 @@ const mapDispatchToProps = dispatch => ({
     fetchVideoAndComments: (videoId, page, perPage) => {
       dispatch(fetchVideoAndComments(videoId, page, perPage));
     },
-    setActiveCategory: category => dispatch(setActiveCategory(category))
+    setActiveCategory: category => dispatch(setActiveCategory(category)),
+    setVideo: video => dispatch(setVideo(video)),
+    setComments: comments => dispatch(setVideoComments(comments))
   }
 });
 
@@ -58,6 +62,11 @@ class VideoContainer extends React.Component {
     } else {
       return null;
     }
+  }
+
+  componentWillUnmount() {
+    this.props.actions.setVideo({});
+    this.props.actions.setComments({});
   }
 
   render() {

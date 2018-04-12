@@ -19,10 +19,11 @@ const mapDispatchToProps = dispatch => ({
   )
 });
 
-const mapStateToProps = ({ category }) => ({
+const mapStateToProps = ({ category, user }) => ({
   store: {
     categories: category.categories,
-    activeCategory: category.activeCategory
+    activeCategory: category.activeCategory,
+    user: { isLogged: user.isLogged }
   }
 });
 
@@ -38,13 +39,15 @@ class MenuContainer extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.location.pathname === "/") {
-      this.props.actions.fetchCategoriesList(true);
-    } else {
-      this.props.actions.fetchCategoriesList(
-        false,
-        this.props.location.pathname
-      );
+    if (this.props.store.user.isLogged) {
+      if (this.props.location.pathname === "/") {
+        this.props.actions.fetchCategoriesList(true);
+      } else {
+        this.props.actions.fetchCategoriesList(
+          false,
+          this.props.location.pathname
+        );
+      }
     }
   }
 
@@ -65,15 +68,13 @@ class MenuContainer extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
-      if (nextProps.store.categories.length > 0) {
-        this.setState({
-          categoriesLoaded: true,
-          categoriesList: this.buildFlatList(
-            nextProps.store.categories,
-            nextProps.store.activeCategory
-          )
-        });
-      }
+      this.setState({
+        categoriesLoaded: true,
+        categoriesList: this.buildFlatList(
+          nextProps.store.categories,
+          nextProps.store.activeCategory
+        )
+      });
     }
   }
 

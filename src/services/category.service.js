@@ -1,5 +1,4 @@
-import axios from "./axios";
-import { endpoints } from "./axios";
+import axios, { endpoints } from "./axios";
 
 export let getCategoriesList = () => {
   return axios.get(endpoints.categories()).then(response => {

@@ -35,39 +35,69 @@ class CategoryVideosContainer extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.store.activeCategory.uri === this.props.match.url) {
+      this.props.actions
+        .fetchCategoryVideos(this.props.match.url, 1)
+        .then(uri => {
+          if (this.props.match.url === uri) {
+            this.setState({ loaded: true });
+          }
+        });
+    }
+  }
+
   handlePageChange(nextPage) {
     this.setState({ loaded: false });
-    this.props.actions
-      .fetchCategoryVideos(this.props.match.url, nextPage)
-      .then(() => {
-        this.setState({ loaded: true });
-      });
+    if (this.props.match.url === "/") {
+      this.props.actions
+        .fetchCategoryVideos(this.props.store.activeCategory.uri, nextPage)
+        .then(() => {
+          this.setState({ loaded: true });
+        });
+    } else {
+      this.props.actions
+        .fetchCategoryVideos(this.props.match.url, nextPage)
+        .then(() => {
+          this.setState({ loaded: true });
+        });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-      if (!this.props.store.categoryVideos.data) {
-        this.props.actions
-          .fetchCategoryVideos(this.props.match.url, 1)
-          .then(() => {
-            this.setState({ loaded: true });
-          });
-      } else if (this.props.match.url !== prevProps.match.url) {
-        this.props.actions
-          .fetchCategoryVideos(this.props.match.url, 1)
-          .then(() => {
-            if (this.props.match.url === this.props.store.activeCategory.uri) {
-              this.setState({ loaded: true });
-            }
-          });
+      if (
+        this.props.store.activeCategory.uri !==
+        prevProps.store.activeCategory.uri
+      ) {
+        if (this.props.match.url === "/") {
+          this.props.actions
+            .fetchCategoryVideos(this.props.store.activeCategory.uri)
+            .then(uri => {
+              if (uri === this.props.store.activeCategory.uri) {
+                this.setState({ loaded: true });
+              }
+            });
+        } else {
+          this.props.actions
+            .fetchCategoryVideos(this.props.match.url)
+            .then(uri => {
+              if (uri === this.props.store.activeCategory.uri) {
+                this.setState({ loaded: true });
+              }
+            });
+        }
       }
     }
   }
 
+  // Change this to getDerivedStateFromProps hook
   componentWillUpdate(nextProps) {
     if (JSON.stringify(nextProps) !== JSON.stringify(this.props)) {
-      if (nextProps.match.url !== this.props.match.url) {
-        this.props.actions.setCategoryVideos({ data: [] });
+      if (
+        nextProps.store.activeCategory.uri !==
+        this.props.store.activeCategory.uri
+      ) {
         this.setState({ loaded: false });
       }
     }
@@ -107,7 +137,8 @@ CategoryVideosContainer.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  store: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  isHome: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

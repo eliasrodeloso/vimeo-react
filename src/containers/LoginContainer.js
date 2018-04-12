@@ -7,10 +7,6 @@ import { LoginView } from "../components/views/users";
 import { setUser } from "../store/actions/user.actions";
 import { doLogin } from "../utils/fake-backend";
 
-const mapStateToProps = state => ({
-  user: state.user
-});
-
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ setUser }, dispatch)
 });
@@ -30,7 +26,7 @@ class LoginContainer extends React.Component {
       .then(response => {
         if (response.ok) {
           this.props.actions.setUser(response.json);
-          this.props.history.push("/")
+          this.props.history.push("/");
         }
       })
       .catch(error => {
@@ -55,8 +51,7 @@ LoginContainer.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default connect(null, mapDispatchToProps)(LoginContainer);
