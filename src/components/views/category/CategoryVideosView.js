@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { CircularProgress } from "material-ui/Progress";
-import Typography from "material-ui/Typography";
-import Divider from "material-ui/Divider";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui/Progress';
+import Typography from 'material-ui/Typography';
+import Divider from 'material-ui/Divider';
 
-import "./index.scss";
-import VideoListPage from "./VideoListPage";
+import './index.scss';
+import VideoListPage from './VideoListPage';
 
 class CategoryVideosView extends React.Component {
   render() {

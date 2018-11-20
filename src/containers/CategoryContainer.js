@@ -1,13 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import Pagination from "react-js-pagination";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Pagination from 'react-js-pagination';
 
-import CategoryVideosView from "../components/views/category/CategoryVideosView";
+import CategoryVideosView from '../components/views/category/CategoryVideosView';
 import {
   fetchCategoryVideos,
   setCategoryVideos
-} from "../store/actions/category.actions";
+} from '../store/actions/category.actions';
 
 const mapStateToProps = ({ category }) => ({
   store: {
@@ -25,7 +25,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const initialState = {
-  loaded: false
+  loaded: false,
+  isErrored: false,
+  error: ''
 };
 
 class CategoryVideosContainer extends React.Component {
@@ -43,23 +45,32 @@ class CategoryVideosContainer extends React.Component {
           if (this.props.match.url === uri) {
             this.setState({ loaded: true });
           }
+        })
+        .catch(error => {
+          this.setState({ isErrored: true, error, loaded: true });
         });
     }
   }
 
   handlePageChange(nextPage) {
     this.setState({ loaded: false });
-    if (this.props.match.url === "/") {
+    if (this.props.match.url === '/') {
       this.props.actions
         .fetchCategoryVideos(this.props.store.activeCategory.uri, nextPage)
         .then(() => {
           this.setState({ loaded: true });
+        })
+        .catch(error => {
+          this.setState({ isErrored: true, error, loaded: true });
         });
     } else {
       this.props.actions
         .fetchCategoryVideos(this.props.match.url, nextPage)
         .then(() => {
           this.setState({ loaded: true });
+        })
+        .catch(error => {
+          this.setState({ isErrored: true, error, loaded: true });
         });
     }
   }
@@ -70,13 +81,16 @@ class CategoryVideosContainer extends React.Component {
         this.props.store.activeCategory.uri !==
         prevProps.store.activeCategory.uri
       ) {
-        if (this.props.match.url === "/") {
+        if (this.props.match.url === '/') {
           this.props.actions
             .fetchCategoryVideos(this.props.store.activeCategory.uri)
             .then(uri => {
               if (uri === this.props.store.activeCategory.uri) {
                 this.setState({ loaded: true });
               }
+            })
+            .catch(error => {
+              this.setState({ isErrored: true, error, loaded: true });
             });
         } else {
           this.props.actions
@@ -85,6 +99,9 @@ class CategoryVideosContainer extends React.Component {
               if (uri === this.props.store.activeCategory.uri) {
                 this.setState({ loaded: true });
               }
+            })
+            .catch(error => {
+              this.setState({ isErrored: true, error, loaded: true });
             });
         }
       }
@@ -98,9 +115,13 @@ class CategoryVideosContainer extends React.Component {
         nextProps.store.activeCategory.uri !==
         this.props.store.activeCategory.uri
       ) {
-        this.setState({ loaded: false });
+        this.setState({ loaded: false, isErrored: false });
       }
     }
+  }
+
+  renderLoaded() {
+    
   }
 
   render() {
@@ -108,6 +129,8 @@ class CategoryVideosContainer extends React.Component {
       <CategoryVideosView
         videos={this.props.store.categoryVideos.data}
         areVideosLoaded={this.state.loaded}
+        isErrored={this.state.isErrored}
+        error={this.state.error}
       >
         {this.props.store.activeCategory.name}
         <Pagination

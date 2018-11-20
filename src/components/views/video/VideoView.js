@@ -1,25 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { CircularProgress } from "material-ui/Progress";
-import Typography from "material-ui/Typography";
-import Divider from "material-ui/Divider";
-import Avatar from "material-ui/Avatar";
-import moment from "moment";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui/Progress';
+import Typography from 'material-ui/Typography';
+import Divider from 'material-ui/Divider';
+import Avatar from 'material-ui/Avatar';
+import moment from 'moment';
 
-import "./index.scss";
+import './index.scss';
 
 class VideoView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loaded: false,
-      video: {}
-    };
-  }
-
   render() {
     return (
       <div className="Video__wrapper">
+        {this.props.sasss}
         {!this.props.loaded ? (
           <CircularProgress className="align-self-center" />
         ) : (
